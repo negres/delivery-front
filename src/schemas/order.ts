@@ -24,6 +24,7 @@ export type FormData = z.infer<typeof FormSchema>
 export type Order = {
   id: string;
   itemsDescription: string;
+  pickupAddress: string;
   deliveryAddress: string;
   estimatedCost: number;
   userId: string;

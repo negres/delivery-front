@@ -20,11 +20,17 @@ export const useOrders = ({ userId }: UseOrdersProps) => {
     setLoading(true);
     try {
       const response = await getOrders({ userId, page: pageToFetch });
-      console.log('Fetched orders:', response);
+
       setOrders(response.orders);
       setTotalPages(response.totalPages || 1);
     } catch (error) {
-      toast.error('Erro ao carregar pedidos. Tente novamente.');
+      if (error instanceof Error && 'response' in error) {
+        const responseError = error as { response?: { data?: { errors?: string[] } } };
+
+        toast.error(responseError.response?.data?.errors?.join(", ") || "Erro ao carregar pedidos. Tente novamente.");
+      } else {
+        toast.error("Erro ao carregar pedidos. Tente novamente.");
+      }
     } finally {
       setLoading(false);
     }
@@ -43,16 +49,14 @@ export const useOrders = ({ userId }: UseOrdersProps) => {
   };
 
   useEffect(() => {
-    if (currentPage === 1) {
+    if (userId && currentPage === 1) {
       fetchOrders(1);
-    } else {
+    } else if (userId) {
       setCurrentPage(1);
+    } else {
+      fetchOrders(currentPage);
     }
-  }, [userId]);
-
-  useEffect(() => {
-    fetchOrders(currentPage);
-  }, [currentPage]);
+  }, [userId, currentPage]);
 
   return {
     orders,

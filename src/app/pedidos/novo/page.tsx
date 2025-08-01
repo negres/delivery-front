@@ -27,8 +27,13 @@ const OrderNewPage = () => {
       await createOrder(data);
       form.reset();
       toast.success("Pedido criado com sucesso!");
-    } catch (error: any) {
-      toast.error(error.response?.data?.errors?.join(", ") || "Erro ao criar pedido. Tente novamente.");
+    } catch (error: unknown) {
+      if (error instanceof Error && 'response' in error) {
+        const responseError = error as { response?: { data?: { errors?: string[] } } };
+        toast.error(responseError.response?.data?.errors?.join(", ") || "Erro ao criar pedido. Tente novamente.");
+      } else {
+        toast.error("Erro ao criar pedido. Tente novamente.");
+      }
     }
   }, [form]);
 

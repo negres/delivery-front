@@ -34,7 +34,7 @@ const Header = () => {
           </div>
           <Link href={buttonLink || "/pedidos"} className="flex items-center">
             <Button>
-              {buttonIcon && React.cloneElement(buttonIcon as React.ReactElement<any>, { className: "h-4 w-4" })}
+              {buttonIcon && React.cloneElement(buttonIcon as React.ReactElement<{ className?: string }>, { className: "h-4 w-4" })}
               <span className="hidden sm:inline ml-2">{buttonText}</span>
             </Button>
           </Link>

@@ -5,10 +5,6 @@ import { render, screen, waitFor } from '@testing-library/react';
 
 import OrdersPage from './page';
 
-jest.mock('@/lib/api/orders', () => ({
-  createOrder: jest.fn(),
-}));
-
 jest.mock('@/components/orders/OrdersTable', () => ({
   __esModule: true,
   default: ({ userId }: { userId: string }) => {
@@ -16,7 +12,9 @@ jest.mock('@/components/orders/OrdersTable', () => ({
       { id: '1', userId: '123', itemsDescription: 'Item A', pickupAddress: 'Address A', deliveryAddress: 'Address B', estimatedCost: 100 },
       { id: '2', userId: '456', itemsDescription: 'Item B', pickupAddress: 'Address B', deliveryAddress: 'Address A', estimatedCost: 100 },
     ];
+
     const filteredOrders = mockOrders.filter(order => order.userId.includes(userId));
+
     return (
       <div>
         {filteredOrders.length > 0 ? (

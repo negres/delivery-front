@@ -1,20 +1,20 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Control, FieldPath, FieldValues, useFormContext } from 'react-hook-form';
+import { Control, FieldPath, FieldValues, PathValue, useFormContext } from 'react-hook-form';
 
 import { Input } from '@/components/ui/input';
 import { FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
 
 interface CurrencyInputFieldProps<T extends FieldValues> {
-  control: Control<T>
-  name: FieldPath<T>
-  label: string
-  placeholder?: string
+  control: Control<T>;
+  name: FieldPath<T>;
+  label: string;
+  placeholder?: string;
 }
 
-const CurrencyInputField = ({ control, name, label, placeholder }: CurrencyInputFieldProps<any>) => {
+const CurrencyInputField = <T extends FieldValues>({ control, name, label, placeholder }: CurrencyInputFieldProps<T>) => {
   const [amount, setAmount] = useState('');
 
-  const { formState, setValue, getValues, clearErrors, trigger, watch } = useFormContext();
+  const { formState, setValue, getValues, clearErrors, watch } = useFormContext<T>();
   const { errors } = formState;
 
   const formatCurrency = useCallback((inputValue: string) => {
@@ -29,7 +29,7 @@ const CurrencyInputField = ({ control, name, label, placeholder }: CurrencyInput
       currency: "BRL",
     });
 
-    setValue(name, Number(numericDigitsOnly) / 100, { shouldDirty: true });
+    setValue(name, (Number(numericDigitsOnly) / 100) as PathValue<T, FieldPath<T>>, { shouldDirty: true });
 
     return formattedValue;
   }, [name, setValue]);
