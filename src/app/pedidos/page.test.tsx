@@ -2,8 +2,13 @@ import '@testing-library/jest-dom';
 
 import userEvent from '@testing-library/user-event';
 import { render, screen, waitFor } from '@testing-library/react';
+import { useSearchParams } from 'next/navigation';
 
 import OrdersPage from './page';
+
+jest.mock('next/navigation', () => ({
+  useSearchParams: jest.fn(),
+}));
 
 jest.mock('@/components/orders/OrdersTable', () => ({
   __esModule: true,
@@ -43,6 +48,9 @@ jest.mock('@/components/orders/OrdersTable', () => ({
 describe('OrdersPage', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    (useSearchParams as jest.Mock).mockReturnValue({
+      get: jest.fn().mockReturnValue(null),
+    });
   });
 
   it('renders the orders page with search input', () => {

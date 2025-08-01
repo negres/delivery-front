@@ -4,10 +4,12 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { useCallback } from 'react';
+import { useRouter } from 'next/navigation';
 
 import { Card, CardTitle } from '@/components/ui/card';
 import OrderForm from '@/components/forms/OrderForm';
 import { createOrder } from '@/lib/api/orders';
+import { handleFailure } from '@/lib/api/handleFailure';
 import { FormSchema, type FormData } from '@/schemas/order';
 
 const OrderNewPage = () => {
@@ -22,18 +24,19 @@ const OrderNewPage = () => {
     },
   });
 
+  const router = useRouter();
+
   const onSubmit = useCallback(async (data: FormData) => {
     try {
       await createOrder(data);
+
       form.reset();
-      toast.success("Pedido criado com sucesso!");
-    } catch (error: unknown) {
-      if (error instanceof Error && 'response' in error) {
-        const responseError = error as { response?: { data?: { errors?: string[] } } };
-        toast.error(responseError.response?.data?.errors?.join(", ") || "Erro ao criar pedido. Tente novamente.");
-      } else {
-        toast.error("Erro ao criar pedido. Tente novamente.");
-      }
+      toast.success('Pedido criado com sucesso!', {
+        description: `Criado em ${new Date().toLocaleString()}`,
+        action: { label: 'Ver pedido', onClick: () => router.push(`/pedidos?userId=${data.userId}`) }
+      });
+    } catch (error) {
+      handleFailure(error, toast.error);
     }
   }, [form]);
 

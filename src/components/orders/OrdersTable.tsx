@@ -23,6 +23,7 @@ const OrdersTable = ({ userId }: { userId?: string }) => {
             <TableRow>
               <TableHead>ID</TableHead>
               <TableHead>Descrição</TableHead>
+              <TableHead>Endereço de Retirada</TableHead>
               <TableHead>Endereço de Entrega</TableHead>
               <TableHead>Valor Estimado</TableHead>
               <TableHead>ID do Usuário</TableHead>
@@ -34,6 +35,7 @@ const OrdersTable = ({ userId }: { userId?: string }) => {
                 <TableRow key={order.id}>
                   <TableCell>{order.id}</TableCell>
                   <TableCell>{order.itemsDescription}</TableCell>
+                  <TableCell>{order.pickupAddress}</TableCell>
                   <TableCell>{order.deliveryAddress}</TableCell>
                   <TableCell>{formatCurrency(order.estimatedCost)}</TableCell>
                   <TableCell>{order.userId}</TableCell>

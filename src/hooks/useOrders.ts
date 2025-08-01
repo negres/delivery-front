@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
+import { handleFailure } from '@/lib/api/handleFailure';
 import { getOrders } from '@/lib/api/orders';
 import { Order } from '@/schemas/order';
 
@@ -18,19 +19,14 @@ export const useOrders = ({ userId }: UseOrdersProps) => {
 
   const fetchOrders = async (pageToFetch: number) => {
     setLoading(true);
+
     try {
       const response = await getOrders({ userId, page: pageToFetch });
 
       setOrders(response.orders);
       setTotalPages(response.totalPages || 1);
     } catch (error) {
-      if (error instanceof Error && 'response' in error) {
-        const responseError = error as { response?: { data?: { errors?: string[] } } };
-
-        toast.error(responseError.response?.data?.errors?.join(", ") || "Erro ao carregar pedidos. Tente novamente.");
-      } else {
-        toast.error("Erro ao carregar pedidos. Tente novamente.");
-      }
+      handleFailure(error, toast.error);
     } finally {
       setLoading(false);
     }
@@ -49,14 +45,13 @@ export const useOrders = ({ userId }: UseOrdersProps) => {
   };
 
   useEffect(() => {
-    if (userId && currentPage === 1) {
-      fetchOrders(1);
-    } else if (userId) {
-      setCurrentPage(1);
-    } else {
-      fetchOrders(currentPage);
-    }
-  }, [userId, currentPage]);
+    setCurrentPage(1);
+  }, [userId]);
+
+  useEffect(() => {
+    fetchOrders(currentPage);
+  }, [currentPage, userId]);
+
 
   return {
     orders,

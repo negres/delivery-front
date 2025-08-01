@@ -4,7 +4,7 @@ export const FormSchema = z.object({
   userId: z
     .string()
     .min(1, "Identificador do usuário é obrigatório")
-    .regex(/^[1-9]+$/, "Identificador do usuário deve ser um número inteiro positivo."),
+    .regex(/^[1-9][0-9]*$/, "Identificador do usuário deve ser um número inteiro positivo."),
   pickupAddress: z
     .string()
     .min(1, "Endereço de coleta é obrigatório")

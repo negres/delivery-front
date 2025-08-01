@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Search } from 'lucide-react';
+import { useSearchParams } from 'next/navigation';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -9,7 +10,8 @@ import OrdersTable from '@/components/orders/OrdersTable';
 import { useDebounce } from '@/hooks/useDebounce';
 
 const OrdersPage = () => {
-  const [userId, setUserId] = useState("");
+  const searchParams = useSearchParams();
+  const [userId, setUserId] = useState(searchParams.get('userId') || "");
   const debouncedUserId = useDebounce(userId, 500);
 
   return (
