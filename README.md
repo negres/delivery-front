@@ -11,7 +11,7 @@ Certifique-se de ter o Node.js (versão 20 ou superior recomendada) e npm ou Yar
 1.  Clone o repositório:
 
     ```bash
-    git clone <repository-url>
+    git clone git@github.com:negres/delivery-front.git
     cd delivery-front
     ```
 
