@@ -1,36 +1,78 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Delivery Front
 
-## Getting Started
+Este projeto é uma aplicação Next.js. Abaixo estão as instruções para configurar, executar e testar o projeto.
 
-First, run the development server:
+## Pré-requisitos
+
+Certifique-se de ter o Node.js (versão 20 ou superior recomendada) e npm ou Yarn instalados.
+
+## Instalação
+
+1.  Clone o repositório:
+
+    ```bash
+    git clone <repository-url>
+    cd delivery-front
+    ```
+
+2.  Instale as dependências:
+
+    ```bash
+    npm install
+    # ou
+    yarn install
+    ```
+
+## Executando o Servidor de Desenvolvimento
+
+Para executar a aplicação em modo de desenvolvimento:
 
 ```bash
 npm run dev
-# or
+# ou
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+A aplicação estará disponível em `http://localhost:3001`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Construindo para Produção
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Para construir a aplicação para produção:
 
-## Learn More
+```bash
+npm run build
+# ou
+yarn build
+```
 
-To learn more about Next.js, take a look at the following resources:
+Isso criará uma pasta `.next` com a build de produção.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Executando o Servidor de Produção
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Para iniciar a aplicação em modo de produção (após a construção):
 
-## Deploy on Vercel
+```bash
+npm run start
+# ou
+yarn start
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Linting
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Para executar o linter e verificar problemas de estilo de código:
+
+```bash
+npm run lint
+# ou
+yarn lint
+```
+
+## Executando Testes
+
+Para executar os testes unitários usando Jest:
+
+```bash
+npm test
+# ou
+yarn test
+```
