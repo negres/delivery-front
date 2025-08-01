@@ -16,7 +16,10 @@ export const FormSchema = z.object({
   itemsDescription: z
     .string()
     .min(1, "Descrição dos itens é obrigatória"),
-  estimatedCost: z.number().min(0.01, { message: "Valor estimado deve ser maior que zero" })
+  estimatedCost: z
+    .number()
+    .min(0.01, { message: "Valor estimado deve ser maior que zero" })
+    .max(99_999_999.99, { message: "Valor estimado não pode exceder 99.999.999,99" })
 })
 
 export type FormData = z.infer<typeof FormSchema>
